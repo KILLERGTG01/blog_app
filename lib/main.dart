@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blog_bloc.dart';
 import 'services/blog_service.dart';
 import 'screens/blog_list_screen.dart';
+import 'utils/logger.dart'; // Import your logger setup
 
 void main() {
+  setupLogging(); // Initialize logging
   final BlogService blogService = BlogService();
 
   runApp(

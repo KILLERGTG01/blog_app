@@ -25,7 +25,9 @@ class BlogListScreen extends StatelessWidget {
               },
             );
           } else if (state is BlogError) {
-            return const Center(child: Text('Failed to load blogs'));
+            return const Center(
+              child: Text('Failed to load blogs. Please try again later.'),
+            );
           }
           return Container();
         },

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/blog_model.dart';
 import '../services/blog_service.dart';
+import '../utils/logger.dart'; // Import the logger
 
 abstract class BlogEvent {}
 
@@ -36,8 +37,15 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
     emit(BlogLoading());
     try {
       final blogs = await blogService.fetchBlogs();
-      emit(BlogLoaded(blogs: blogs));
+      if (blogs.isEmpty) {
+        logger.warning("No blogs found after fetching from API.");
+        emit(BlogError());
+      } else {
+        logger.info("Blogs successfully loaded.");
+        emit(BlogLoaded(blogs: blogs));
+      }
     } catch (error) {
+      logger.severe("Failed to load blogs.");
       emit(BlogError());
     }
   }
